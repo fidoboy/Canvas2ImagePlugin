@@ -37,7 +37,6 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 			CallbackContext callbackContext) throws JSONException {
 
 		if (action.equals(ACTION)) {
-
 			String base64 = data.optString(0);
 			String extension = data.optString(1);
 			String quality = data.optString(2);
@@ -77,9 +76,9 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 	private int getQuality(String strQuality){
 		int result=100;
 		try {
-		    result=Integer.valueOf(strQuality);
-		    if (result> 100) result=100;
-		    if (result < 1) result=1;
+			result=Integer.valueOf(strQuality);
+			if (result> 100) result=100;
+			if (result < 1) result=1;
 		} catch (Exception e){}		
 		return result;
 	}
@@ -137,8 +136,8 @@ public class Canvas2ImagePlugin extends CordovaPlugin {
 	private void scanPhoto(File imageFile)
 	{
 		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-	    Uri contentUri = Uri.fromFile(imageFile);
-	    mediaScanIntent.setData(contentUri);	      		  
-	    cordova.getActivity().sendBroadcast(mediaScanIntent);
+		Uri contentUri = Uri.fromFile(imageFile);
+		mediaScanIntent.setData(contentUri);	      		  
+		cordova.getActivity().sendBroadcast(mediaScanIntent);
 	} 
 }
