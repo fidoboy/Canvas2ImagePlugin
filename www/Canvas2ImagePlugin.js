@@ -9,34 +9,38 @@
 (function() {
 	var cordovaRef = window.cordova;
 	
-	var saveImageDataToLibrary = function(successCallback, failureCallback, canvasId, fileExtension, quality, picfolder, add2galery) {
-		// successCallback required
-		if (typeof successCallback != "function") {
-			console.log("Canvas2ImagePlugin Error: successCallback is not a function");
-		} else if (typeof failureCallback != "function") {
-			console.log("Canvas2ImagePlugin Error: failureCallback is not a function");
-		} else if ((fileExtension) && ((fileExtension.toLowerCase() != '.jpg') && (fileExtension.toLowerCase != '.png'))) {
-			console.log("Canvas2ImagePlugin Error: fileExtension must be '.jpg' or '.png'");
-		} else {
-			var canvas = (typeof canvasId === "string") ? document.getElementById(canvasId) : canvasId;
-			var imageData = canvas.toDataURL().replace(/data:image\/png;base64,/, '');
-			var extension = '.png';
-			var destQuality = 100;
-			if (fileExtension) extension = fileExtension.toLowerCase();
-			try {
-				if (quality) destQuality = parseFloat(quality);
-			} catch (e) {}
-			var params = [imageData, extension, destQuality];
-			if (picfolder) {
-				params = [imageData, extension, destQuality, picfolder];
-				if (add2galery) params.push(add2galery);
+	var Canvas2Image = function() {};
+	
+	Canvas2Image.prototype = {
+		saveImageDataToLibrary: function(successCallback, failureCallback, canvasId, fileExtension, quality, picfolder, add2galery) {
+			// successCallback required
+			if (typeof successCallback != "function") {
+				console.log("Canvas2ImagePlugin Error: successCallback is not a function");
+			} else if (typeof failureCallback != "function") {
+				console.log("Canvas2ImagePlugin Error: failureCallback is not a function");
+			} else if ((fileExtension) && ((fileExtension.toLowerCase() != '.jpg') && (fileExtension.toLowerCase != '.png'))) {
+				console.log("Canvas2ImagePlugin Error: fileExtension must be '.jpg' or '.png'");
+			} else {
+				var canvas = (typeof canvasId === "string") ? document.getElementById(canvasId) : canvasId;
+				var imageData = canvas.toDataURL().replace(/data:image\/png;base64,/, '');
+				var extension = '.png';
+				var destQuality = 100;
+				if (fileExtension) extension = fileExtension.toLowerCase();
+				try {
+					if (quality) destQuality = parseFloat(quality);
+				} catch (e) {}
+				var params = [imageData, extension, destQuality];
+				if (picfolder) {
+					params = [imageData, extension, destQuality, picfolder];
+					if (add2galery) params.push(add2galery);
+				}
+				return cordovaRef.exec(successCallback, failureCallback, "Canvas2ImagePlugin", "saveImageDataToLibrary", [params]);
 			}
-			return cordovaRef.exec(successCallback, failureCallback, "Canvas2ImagePlugin", "saveImageDataToLibrary", [params]);
 		}
-	}
+	};
 	
 	cordovaRef.addConstructor(function() {
 		window.plugins = window.plugins || {};
-		window.plugins.Canvas2Image = new saveImageDataToLibrary();
+		window.plugins.Canvas2Image = new Canvas2Image();
 	});
 })();
