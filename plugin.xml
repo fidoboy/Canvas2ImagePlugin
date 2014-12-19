@@ -16,7 +16,7 @@
     <license>MIT</license>
 
     <js-module src="www/Canvas2ImagePlugin.js" name="Canvas2ImagePlugin">
-        <clobbers target="window.canvas2ImagePlugin" />
+        <clobbers target="plugins.canvas2ImagePlugin" />
     </js-module>
 
     <!-- ios -->
