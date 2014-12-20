@@ -11,7 +11,7 @@
 #import <Cordova/CDV.h>
 
 @implementation Canvas2ImagePlugin
-@synthesize callbackId;
+@synthesize latestCommand;
 
 //-(CDVPlugin*) initWithWebView:(UIWebView*)theWebView
 //{
@@ -21,12 +21,11 @@
 
 - (void)saveImageDataToLibrary:(CDVInvokedUrlCommand*)command
 {
-    self.callbackId = command.callbackId;
+    	self.latestCommand = command;
 	NSData* imageData = [NSData dataFromBase64String:[command.arguments objectAtIndex:0]];
 	
 	UIImage* image = [[[UIImage alloc] initWithData:imageData] autorelease];	
 	UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-	
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
@@ -37,14 +36,14 @@
         // Show error message...
         NSLog(@"ERROR: %@",error);
 		CDVPluginResult* result = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:error.description];
-		[self.webView stringByEvaluatingJavaScriptFromString:[result toErrorCallbackString: self.callbackId]];
+		[self.commandDelegate sendPluginResult:result callbackId: self.latestCommand.callbackId];
     }
     else  // No errors
     {
         // Show message image successfully saved
         NSLog(@"IMAGE SAVED!");
 		CDVPluginResult* result = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString:@"Image saved"];
-		[self.webView stringByEvaluatingJavaScriptFromString:[result toSuccessCallbackString: self.callbackId]];
+		[self.commandDelegate sendPluginResult:result callbackId:self.latestCommand.callbackId];
     }
 }
 
