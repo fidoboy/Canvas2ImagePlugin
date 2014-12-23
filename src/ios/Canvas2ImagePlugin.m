@@ -9,6 +9,7 @@
 
 #import "Canvas2ImagePlugin.h"
 #import <Cordova/CDV.h>
+#import <Foundation/Foundation.h>
 
 @implementation Canvas2ImagePlugin
 @synthesize latestCommand;
