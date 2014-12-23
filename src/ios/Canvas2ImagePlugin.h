@@ -8,7 +8,7 @@
 //
 
 
-#import <Cordova/CDVPlugin.h> Not needed with steroids (conflicts with other plugins)
+#import <Cordova/CDVPlugin.h>
 
 @interface Canvas2ImagePlugin : CDVPlugin
 {
