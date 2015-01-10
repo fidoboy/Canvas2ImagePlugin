@@ -25,7 +25,8 @@
 	self.latestCommand = command;
 	NSData* imageData = [NSData dataFromBase64String:[command.arguments objectAtIndex:0]];
 
-	UIImage* image = [[[UIImage alloc] initWithData:imageData] autorelease];
+	//UIImage* image = [[[UIImage alloc] initWithData:imageData] autorelease];
+	UIImage* image = [[[UIImage alloc] initWithData:imageData]];
 	UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
 
