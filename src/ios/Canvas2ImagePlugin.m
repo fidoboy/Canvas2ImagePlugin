@@ -48,10 +48,11 @@
 	}
 }
 
-- (void)dealloc
-{
-	[callbackId release];
-	[super dealloc];
-}
+// Useless with ARC
+//- (void)dealloc
+//{
+//	[callbackId release];
+//	[super dealloc];
+//}
 
 @end
